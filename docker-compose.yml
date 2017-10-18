@@ -1,0 +1,20 @@
+docker-compose.yml:
+services:
+  zentao:
+    image: yinguowei/zentao
+    restart: always
+    ports:
+      - "1080:80"
+    networks:
+      frontend_zentao:
+      backend_zentao:
+    volumes:
+      - volume_zentao_data:/opt/zbox
+#      - /opt/zbox/:/opt/zbox/
+
+networks:
+  frontend_zentao:
+  backend_zentao:
+
+volumes:
+  volume_zentao_data:
