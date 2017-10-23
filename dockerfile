@@ -1,28 +1,23 @@
-FROM ubuntu:trusty
+FROM php:7.1.10-apache-jessie
 
-# 9.2.1 ok 的，版本是老的 9.2.1
-# ADD https://ncu.dl.sourceforge.net/project/zentao/9.2.1/ZenTaoPMS.9.2.1.zbox_64.tar.gz /tmp
-# 9.5.1 下载只有 100 多 k，不知道 why
-# ADD https://nchc.dl.sourceforge.net/project/zentao/9.5.1/ZenTaoPMS.9.5.1.zbox_64.tar.gz /tmp/
-ADD https://jaist.dl.sourceforge.net/project/zentao/9.5.1/ZenTaoPMS.9.5.1.zbox_64.tar.gz /tmp/
+# 安装 zip
+RUN set -x \
+    && apt-get -y update \
+    && apt-get install -y zip \
+    && rm -rf /var/lib/apt/lists/*
 
-# PRO 专业版
-# ADD   https://jaist.dl.sourceforge.net/project/zentao/Pro6.1/ZenTaoPMS.Pro6.1.stable.zbox_64.tar.gz  /tmp
+# 安装禅道需要的组件
+RUN docker-php-ext-install -j$(nproc) pdo_mysql \
+    && mkdir /php_session_path \
+    && chmod o=rwx -R /php_session_path \
+    && echo "session.save_path = \"/php_session_path\"">>/usr/local/etc/php/php.ini
 
-RUN tar -zxvf /tmp/ZenTaoPMS.9.5.1.zbox_64.tar.gz -C /opt \
-    && rm -rf /tmp/ZenTaoPMS.9.5.1.zbox_64.tar.gz /tmp/zbox*
+# 获取源码包
+ADD https://nchc.dl.sourceforge.net/project/zentao/9.5.1/ZenTaoPMS.9.5.1.zip /var/www/html/
+#ADD ZenTaoPMS.9.5.1.zip /var/www/html/
 
-COPY ./entrypoint.sh /usr/local/bin/
+# 解压
+RUN unzip /var/www/html/ZenTaoPMS.9.5.1.zip && rm -f /var/www/html/ZenTaoPMS.9.5.1.zip
 
-EXPOSE 80
-
-ENTRYPOINT  ["/usr/local/bin/entrypoint.sh"]
-
-
-#COPY  ./boot.sh   /usr/local/boot.sh
-#RUN   chmod +x    /usr/local/boot.sh
-
-#ENTRYPOINT  ["/usr/local/boot.sh"]
-
-
-
+# 备份目录挂载卷
+VOLUME /var/www/html/zentaopms/tmp/backup
