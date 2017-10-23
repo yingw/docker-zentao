@@ -9,7 +9,7 @@ services:
       frontend_zentao:
       backend_zentao:
     volumes:
-      - volume_zentao_data:/opt/zbox
+      - volume_zentao_data:/var/www/html/zentaopms/tmp/backup
 #      - /opt/zbox/:/opt/zbox/
 
 networks:

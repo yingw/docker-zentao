@@ -1,6 +1,6 @@
 FROM ubuntu:trusty
 
-# 这个 dockerfile 是官方一键安装包的使用方式，目前已改成源码安装
+# 已废弃：这个 dockerfile 是按照之前官方一键安装包的使用方式，目前已改成源码安装
 
 # 9.2.1 ok 的，版本是老的 9.2.1
 # ADD https://ncu.dl.sourceforge.net/project/zentao/9.2.1/ZenTaoPMS.9.2.1.zbox_64.tar.gz /tmp

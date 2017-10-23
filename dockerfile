@@ -1,9 +1,11 @@
 FROM php:7.1.10-apache-jessie
 
+ENV ZENTAO_VERSION 9.5.1
+
 # 安装 zip
 RUN set -x \
     && apt-get -y update \
-    && apt-get install -y zip \
+    && apt-get install -y --no-install-recommends zip \
     && rm -rf /var/lib/apt/lists/*
 
 # 安装禅道需要的组件
@@ -13,11 +15,11 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql \
     && echo "session.save_path = \"/php_session_path\"">>/usr/local/etc/php/php.ini
 
 # 获取源码包
-ADD https://nchc.dl.sourceforge.net/project/zentao/9.5.1/ZenTaoPMS.9.5.1.zip /var/www/html/
-#ADD ZenTaoPMS.9.5.1.zip /var/www/html/
+ADD https://nchc.dl.sourceforge.net/project/zentao/$ZENTAO_VERSION/ZenTaoPMS.$ZENTAO_VERSION.zip /var/www/html/
+#ADD ZenTaoPMS.$ZENTAO_VERSION.zip /var/www/html/
 
 # 解压
-RUN unzip /var/www/html/ZenTaoPMS.9.5.1.zip && rm -f /var/www/html/ZenTaoPMS.9.5.1.zip
+RUN unzip /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.zip && rm -f /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.zip
 
 # 备份目录挂载卷
 VOLUME /var/www/html/zentaopms/tmp/backup
