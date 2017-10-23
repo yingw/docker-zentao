@@ -1,11 +1,22 @@
 FROM php:7.1.10-apache-jessie
 
+LABEL maintainer="yinguowei@gmail.com"
+
 ENV ZENTAO_VERSION 9.5.1
+#ENV DEBIAN_FRONTEND noninteractive
 
 # 安装 zip
-RUN set -x \
-    && apt-get -y update \
-    && apt-get install -y --no-install-recommends zip \
+#RUN set -x \
+#    && apt-get -y update \
+#    && apt-get install -y --no-install-recommends zip \
+#    && rm -rf /var/lib/apt/lists/*
+
+#RUN apt-get autoremove \
+#    && apt-get autoclean \
+#    && apt-get dist-upgrade
+
+RUN apt-get -y update \
+    && apt-get install -y --no-install-recommends apt-utils unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # 安装禅道需要的组件
