@@ -4,7 +4,7 @@
 ## dockerfiles
 
 - version: 10.3.stable, 10, latest [dockerfile](https://github.com/yingw/docker-zentao/blob/master/dockerfile)
-- version: 9.8.3, 9 [dockerfile](https://github.com/yingw/docker-zentao/blob/master/dockerfile)
+- version: 9.8.3, 9 [dockerfile](https://github.com/yingw/docker-zentao/blob/9/dockerfile)
 - Zentao Pro (for Trial) [dockerfile](https://github.com/yingw/docker-zentao/blob/master/README.md)
 
 ## Requirement
