@@ -15,13 +15,13 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql \
     && chmod o=rwx -R /php_session_path \
     && echo "session.save_path = \"/php_session_path\"">>/usr/local/etc/php/php.ini
 
-ENV ZENTAO_VERSION 10.3
+ENV ZENTAO_VERSION 9.8.3
 
 # 获取源码包
-ADD http://dl.cnezsoft.com/zentao/$ZENTAO_VERSION/ZenTaoPMS.$ZENTAO_VERSION.stable.zip /var/www/html/
+ADD http://dl.cnezsoft.com/zentao/$ZENTAO_VERSION/ZenTaoPMS.$ZENTAO_VERSION.zip /var/www/html/
 
 # 解压
-RUN unzip /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.stable.zip && rm -f /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.stable.zip
+RUN unzip /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.zip && rm -f /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.zip
 
 RUN echo "<html>\n<head>\n<meta http-equiv=\"refresh\" content=\"0;url=/zentaopms/www/\">\n</head>\n</html>" > /var/www/html/index.html
 
