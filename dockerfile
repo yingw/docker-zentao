@@ -1,21 +1,11 @@
-FROM php:7.1.10-apache-jessie
+FROM php:7.2.8-apache-stretch
 
 LABEL maintainer="yinguowei@gmail.com"
 
-ENV ZENTAO_VERSION 9.5.1
-#ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND noninteractive
 
-# 安装 zip
-#RUN set -x \
-#    && apt-get -y update \
-#    && apt-get install -y --no-install-recommends zip \
-#    && rm -rf /var/lib/apt/lists/*
-
-#RUN apt-get autoremove \
-#    && apt-get autoclean \
-#    && apt-get dist-upgrade
-
-RUN apt-get -y update \
+RUN set -x \
+    && apt-get -y update \
     && apt-get install -y --no-install-recommends apt-utils unzip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -25,12 +15,16 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql \
     && chmod o=rwx -R /php_session_path \
     && echo "session.save_path = \"/php_session_path\"">>/usr/local/etc/php/php.ini
 
+ENV ZENTAO_VERSION 10.3
+
 # 获取源码包
-ADD https://nchc.dl.sourceforge.net/project/zentao/$ZENTAO_VERSION/ZenTaoPMS.$ZENTAO_VERSION.zip /var/www/html/
-#ADD ZenTaoPMS.$ZENTAO_VERSION.zip /var/www/html/
+ADD http://dl.cnezsoft.com/zentao/$ZENTAO_VERSION/ZenTaoPMS.$ZENTAO_VERSION.stable.zip /var/www/html/
 
 # 解压
-RUN unzip /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.zip && rm -f /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.zip
+RUN unzip /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.stable.zip && rm -f /var/www/html/ZenTaoPMS.$ZENTAO_VERSION.stable.zip
+
+RUN echo "<html>\n<head>\n<meta http-equiv=\"refresh\" content=\"0;url=/zentaopms/www/\">\n</head>\n</html>" > /var/www/html/index.html
 
 # 备份目录挂载卷
+RUN mkdir -p /var/www/html/zentaopms/tmp/backup && chmod 777 /var/www/html/zentaopms/tmp/backup
 VOLUME /var/www/html/zentaopms/tmp/backup

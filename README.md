@@ -3,8 +3,8 @@
 
 ## dockerfiles
 
-- version 9.5.1 [dockerfile](https://github.com/yingw/docker-zentao/blob/master/dockerfile)
-- version 9.2.1
+- version: 10.3.stable, 10, latest [dockerfile](https://github.com/yingw/docker-zentao/blob/master/dockerfile)
+- version: 9.8.3, 9 [dockerfile](https://github.com/yingw/docker-zentao/blob/master/dockerfile)
 - Zentao Pro (for Trial) [dockerfile](https://github.com/yingw/docker-zentao/blob/master/README.md)
 
 ## Requirement
@@ -15,16 +15,25 @@ docker-compose version >= 1.13
 
 ## Run
 
+### Zentao V10
 ```
-docker run -d --restart=always -p=1080:80 -v=/opt/zbox:/opt/zbox --name=zentao yinguowei/zentao
-```
-
-Or
-
-```
-docker run yinguowei/zentao:9.5.1
+docker run -d --restart always \
+  -p 80:80 -v /opt/zentao/backup:/var/www/html/zentaopms/tmp/backup\
+  --name=zentao yinguowei/zentao
 ```
 
-访问：
-Visit website： https://LOCALHOST_IP:1080/
-default user/passwd: admin/123456
+### Zentao V9
+```
+docker run -d --restart always \
+  -p 80:80 -v /opt/zentao/backup:/var/www/html/zentaopms/tmp/backup \
+  --name=zentao yinguowei/zentao:9
+```
+
+### Start with a mysql container
+
+```
+docker run -d --name mysql mysql
+docker run -d --link mysql:mysql --name zentao yinguowei/zentao
+```
+
+Visit website： http://localhost/ or http://localhost/zentaopms/www/
