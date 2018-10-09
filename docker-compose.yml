@@ -1,20 +1,23 @@
-docker-compose.yml:
+version: '3.1'
+
 services:
   zentao:
-    image: yinguowei/zentao
+    image: yinguowei/zentao:10.4.stable
     restart: always
     ports:
-      - "1080:80"
-    networks:
-      frontend_zentao:
-      backend_zentao:
+      - "80:80"
     volumes:
-      - volume_zentao_data:/var/www/html/zentaopms/tmp/backup
-#      - /opt/zbox/:/opt/zbox/
-
-networks:
-  frontend_zentao:
-  backend_zentao:
-
+      - zentao_backup_data:/var/www/html/zentaopms/tmp/backup
+  mysql:
+    image: mysql:5.7.23
+    ports:
+      - "3307:3306"
+    volumes:
+      - zentao_mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: zentao!23
+      MYSQL_DATABASE: zentao
+    restart: always
 volumes:
-  volume_zentao_data:
+  zentao_backup_data:
+  zentao_mysql_data:

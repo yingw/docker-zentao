@@ -3,15 +3,14 @@
 
 ## dockerfiles
 
-- version: 10.3.stable, 10, latest [dockerfile](https://github.com/yingw/docker-zentao/blob/master/dockerfile)
+- version: 10.4.stable, 10, latest [dockerfile](https://github.com/yingw/docker-zentao/blob/master/dockerfile)
 - version: 9.8.3, 9 [dockerfile](https://github.com/yingw/docker-zentao/blob/9/dockerfile)
 - Zentao Pro (for Trial) [dockerfile](https://github.com/yingw/docker-zentao/blob/master/README.md)
 
 ## Requirement
 
-docker version >= 1.12
-
-docker-compose version >= 1.13
+- docker version >= 1.12
+- docker-compose version >= 1.13
 
 ## Run
 
@@ -36,4 +35,10 @@ docker run -d --name mysql mysql
 docker run -d --link mysql:mysql --name zentao yinguowei/zentao
 ```
 
-Visit website： http://localhost/ or http://localhost/zentaopms/www/
+### Or Start with a mysql using docker-compose
+
+```
+docker-compose up -d
+```
+
+Visit website： [http://localhost/](http://localhost/)

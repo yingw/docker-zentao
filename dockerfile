@@ -15,7 +15,7 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql \
     && chmod o=rwx -R /php_session_path \
     && echo "session.save_path = \"/php_session_path\"">>/usr/local/etc/php/php.ini
 
-ENV ZENTAO_VERSION 10.3
+ENV ZENTAO_VERSION 10.4
 
 # 获取源码包
 ADD http://dl.cnezsoft.com/zentao/$ZENTAO_VERSION/ZenTaoPMS.$ZENTAO_VERSION.stable.zip /var/www/html/
